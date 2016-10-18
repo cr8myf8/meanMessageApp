@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="styles.css">
+	</head>
+	<body ng-app="myApp">
+		<div  ng-controller="phoneNumCtrl">
+
+		Phone Nums:  Email Addresses:<br> 
+		<textarea ng-model="emailSubject" rows="1" cols="30" placeholder="Email Subject Line"></textarea><br>
+		<textarea ng-model="phoneNums" rows="15" cols="15" placeholder="Enter phone numbers here"></textarea>
+
+		<textarea ng-model="email" rows="15" cols="30" placeholder="Enter email addresses here"></textarea><br>
+
+		<div id="errorText" ng-if="errorTextInfo.length>0" class="error" ng-model="errorTextInfo">The following Phone Numbers were not valid:{{errorTextInfo}}</div>
+
+		<div id="errorEmail" ng-if="errorEmailInfo.length>0" class="error" ng-model="errorEmailInfo">The following emails were not valid:{{errorEmailInfo}}</div>
+		Message:<br>
+
+		<textarea ng-model="message" rows="15" cols="31" placeholder="Enter message here" maxlength="480"></textarea>
+
+
+		<div id="part1" ng-if="message.length>0" class="messages">{{message.substring(0,160)}}</div>
+
+		<div id="part2" ng-if="message.length>160" class="messages">{{message.substring(160,320)}}</div>
+
+		<div id="part3" ng-if="message.length>320" class="messages">{{message.substring(320,480)}}</div>
+		
+		<div id="part4" ng-if="retAddr.length>0" class="messages"><a id="mapurl" ng-href="{{retAddr}}">{{retAddr}}</a></div>
+
+		<textarea ng-model="eventAddr" rows="3" cols="30" placeholder="Enter Event Address"></textarea> 
+		<button ng-click="eventAddress()" ng-disabled="!eventAddr">Get Address</button><br>
+		<div id="map"></div>
+		    <div id="class" ng-repeat="marker in markers | orderBy : 'title'">
+		         <a href="#" ng-click="openInfoWindow($event, marker)">{{marker.title}}</a>
+		    </div>
+
+
+		<!-- <li ng-repeat="element in msgElemnts">
+			<textarea readonly rows="6" cols="31">{{element}}</textarea>
+		</li> -->
+		<br>
+		<!-- number of chars:{{message.length}} -->
+		<button ng-click="sendMessage()" ng-disabled="(!phoneNums && !email) || !message">Send Message</button>
+		<br>Phone Numbers:<br> 
+		<div><pre>{{phoneNums}}</pre></div> 
+		Email Addresses:<br> 
+		<div><pre>{{email}} </pre></div>
+
+	</div>
+	<script   src="http://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
+<script type = "text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+<script src="/js/controllers/phoneNumCtrl.js"></script>
+<script src="/js/controllers/mapCtrl.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBnpfpDKkxLU0EHrRC5nSIWGiNmkgnseA8"
+    async defer></script>
+
+       <script>
+      var map;
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          // center: {lat: -34.397, lng: 150.644},
+          zoom: 8
+        });
+      }
+    </script>
+
+	</body>
+</html>
